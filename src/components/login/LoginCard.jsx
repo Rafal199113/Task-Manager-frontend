@@ -1,23 +1,33 @@
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
-import { login } from "../../services/api/auth.service";
+import { useState, useContext, useEffect } from "react";
 import  Error  from "@/components/shared/Error";
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from '../../providers/AuthProvider'
 
 function LoginCard() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+  const { login } = useAuth();
+  
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
     e.preventDefault();
+      login(email, password).then((user) => {
+    
+        navigate("/dashboard");
+        });
 
-    const data = await login(email, password).then((response) => {
-        localStorage.setItem("token", response.token);
-    }).catch((error) => {
-        setError(error.response.data.error);
-    });
+  
+
+
+   
+
+      
+
     }
-
     return (
         <div className="flex items-center justify-center min-h-screen ">
             <form onSubmit={handleSubmit} className="min-h-[300px] w-[600px] bg-white border border-gray-200 rounded-lg">
@@ -29,6 +39,7 @@ function LoginCard() {
                 </div>
                 <Error message={error} onClose={() => setError("")} />
             </form>
+            
         </div>
   );
 }
