@@ -1,46 +1,29 @@
 import React from 'react';
-import { useAuth } from '../../providers/AuthProvider'
-import Avatar from '../../components/dashboard/Avatar'
-import { useTranslation } from 'react-i18next';
+import Navbar from '../../components/dashboard/Navbar';
+import Menu from '../../components/dashboard/Menu/Menu'
 
 function Dashboard() {
-  const {logoutUser} =  useAuth();
-  const { user, role } = useAuth(); 
-  const { t } = useTranslation()
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-        logoutUser();
-    }
-
   return (
   <>
-   <div className="flex w-full items-center justify-between">
-      <div className="flex items-center gap-3 py-4">
-        <div className="rounded-full bg-gray-300 w-10 h-10 flex items-center justify-center">
-          <div>
-              {user?.name?.charAt(0)}
-              {user?.surname?.charAt(0)}
-          </div>
-        </div>
+  <div className=" flex w-full flex-col">
 
-        <div className='col'>
-          <strong>
-            {user?.name} {user?.surname} 
-          </strong>
-          <div>
-            {t(`roles.${role[0]?.name}`)}
-          </div>
-        </div>
-      </div>
+  <div className="h-20 bg-gray-800 rounded-xl text-white flex items-center px-4">
+    <Navbar />
+  </div>
+  <div className="flex  mt-3 flex-1 h-16">
 
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-500 text-white py-4 px-6 rounded-md hover:bg-blue-600"
-      >
-        Wyloguj się
-      </button>
+    <div className="w-64 rounded-xl  text-white">
+       <Menu />
     </div>
+
+    {/* CONTENT */}
+    <div className="flex-1 bg-white p-4">
+      Content
+    </div>
+
+  </div>
+
+</div>
   </>
 );
 }
