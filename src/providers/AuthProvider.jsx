@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
       setIsLogged(true);
       if (! user){
           getMe().then((response) => {setUser(response.data.user);
-            setRole(response.data.roles);
+            setRole(response.data.roles[0]);
             console.log(response.data.roles)
         }).catch(() => {
           setIsLogged(false);
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const response = await auth(email, password);
     setUser(response.user);
-    setRole(response.roles);
+    setRole(response.roles[0]);
     setIsLogged(true);
     localStorage.setItem('token', response.token);
     return response;

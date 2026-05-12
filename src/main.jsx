@@ -15,6 +15,6 @@ createRoot(document.getElementById('root')).render(
         <App />
         </AuthProvider>
       </BrowserRouter>
-    </I18nextProvider>
+      </I18nextProvider>
   </StrictMode>,
 )
