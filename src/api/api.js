@@ -4,10 +4,15 @@ const api = axios.create({
   baseURL: "http://localhost:8089/api",
 });
 
+api.defaults.withCredentials = true;
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-    
-  if (token) {
+
+  if (
+    token &&
+    config.url !== "/refreshToken"
+  ) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
 
@@ -15,34 +20,54 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) =>{
+  (response) => {
+          console.log("Response:", response.data); 
     return response},
-  
-   (error) => {
-    if (error.response) {
-        
-      const status = error.response.status;
-   
-      if (status === 401) {
-        console.log("Brak autoryzacji");
+
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/refreshToken"
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const res = await api.post(
+          "/refreshToken",
+          {},
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: "",
+            },
+          }
+        );
+
+        const newToken = res.data.access_token;
+
+        localStorage.setItem("token", newToken);
+
+        originalRequest.headers[
+          "Authorization"
+        ] = `Bearer ${newToken}`;
+
+        return api(originalRequest);
+
+      } catch (err) {
         localStorage.removeItem("token");
-      }
 
-      if (status === 403) {
-        console.log("Brak dostępu");
-      }
+        window.location.href = "/login";
 
-      if (status === 500) {
-        console.log("Błąd serwera");
+        return Promise.reject(err);
       }
-    } else if (error.request) {
-      console.log("Brak odpowiedzi z serwera");
-    } else {
-      console.log("Błąd konfiguracji:", error.message);
     }
 
     return Promise.reject(error);
   }
-);  
+);
+
 
 export default api;
