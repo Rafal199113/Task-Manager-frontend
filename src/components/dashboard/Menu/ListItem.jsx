@@ -1,22 +1,27 @@
-
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from "react-router-dom";
 
-function ListItem(props){
-      const navigate = useNavigate();
+function ListItem(props) {
     return (
-      <div onClick={() => props.link && navigate(props.link)} className="flex items-center hover:bg-gray-600 gap-x-3 w-64 rounded-xl bg-gray-800 p-3">
-        <div>
-          <FontAwesomeIcon size="2x" icon={props.icon} />
-        </div>
+        <NavLink
+            to={props.link || "#"}
+           className={({ isActive }) =>
+            `flex items-center gap-x-3 w-64 rounded-xl p-3 ${
+                isActive && props.link ? "bg-gray-700 border-red-500" : "bg-gray-800"
+            }`
+        }
+        >
+            {props.fileIcon && (
+                <img src={props.fileIcon} alt="Logo" width={props.size} />
+            )}
 
-        <div>
-          {props.label}
-        </div>
-      </div>
-  );
+            {props.icon && (
+                <FontAwesomeIcon size="2x" icon={props.icon} />
+            )}
+
+            <div>{props.label}</div>
+        </NavLink>
+    );
 }
 
-export default ListItem
+export default ListItem;
