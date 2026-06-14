@@ -5,14 +5,17 @@ import { useRoles } from "hooks/roles";
 import Loader from "../../components/shared/Loader";
 import FormValidator from "../../validators/FormValidator";
 import _Form from "./_Form";
+import { useAuth } from "../../providers/AuthProvider";
 import Breadcrumbs from "../../components/shared/Breadcrumbs";
 
 function Edit() {
     const whereIam = [{ "Dashboard": null }, { "Użytkownicy": "/users" }, { "Edytuj użytkownika": null }]
     const { id } = useParams();
     const { data: roles, isLoading: isRoleLoading } = useRoles();
-    const { data: user, isLoading: isUserLoading } = useEditUser(id);
-    const [userRoles, setUserRoles] = useState([]);
+    const { role } = useAuth();
+    const { data: editedUser, isLoading: isUserLoading } = useEditUser(id);
+    const [selectedRole, setSelectedRole] = useState(null);
+
     const {
         mutate: updateUser,
         isPending: isUpdating,
@@ -22,21 +25,11 @@ function Edit() {
 
     const isPageLoading = isUserLoading || isRoleLoading;
 
-    const updateRoles = (id, isChecked) => {
-        setUserRoles(prev => {
-            if (isChecked) {
-                return [...prev, id];
-            } else {
-                return prev.filter(roleId => roleId !== id);
-            }
-        });
-    };
-
     useEffect(() => {
-        if (user?.data?.roles) {
-            setUserRoles(user.data.roles.map(r => r.id));
+        if (editedUser?.data?.roles?.length) {
+            setSelectedRole(editedUser.data.roles[0].id);
         }
-    }, [user]);
+    }, [editedUser]);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -71,7 +64,7 @@ function Edit() {
             surname: e.target.surname.value,
             email: e.target.email.value,
             password: e.target.password.value,
-            roles: userRoles
+            roles: selectedRole
         };
 
         updateUser({
@@ -90,7 +83,7 @@ function Edit() {
                     </div>
                     <div className="p-2">
                         <form onSubmit={onSubmit}>
-                            <_Form errors={errors} user={user?.data} isEdit />
+                            <_Form errors={errors} user={editedUser?.data} isEdit />
                         </form>
                     </div>
                 </div>
@@ -101,13 +94,20 @@ function Edit() {
                     </div>
                     <div className="p-2 space-y-2">
                         {roles?.data?.map((rolee, index) => (
-                            <label key={index} className="flex items-center gap-2">
-                                <input type="checkbox" checked={userRoles.includes(rolee.id)} onChange={(e) => updateRoles(rolee.id, e.target.checked)} value={rolee.id} className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                                <span className="text-sm text-gray-700">
-                                    {rolee.label}
-                                </span>
-                            </label>
-                        ))}
+                    <label key={index} className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            name="role"
+                            checked={selectedRole === rolee.id}
+                            onChange={() => setSelectedRole(rolee.id)}
+                            value={rolee.id}
+                            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        />
+                        <span className="text-sm text-gray-700">
+                            {rolee.label}
+                        </span>
+                    </label>
+))}
                     </div>
                 </div>
             </div>

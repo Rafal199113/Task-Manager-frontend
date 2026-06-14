@@ -17,6 +17,7 @@ import RoleEdit from 'pages/Administration/Roles/Edit'
 import Role from 'pages/Administration/Roles/index'
 import AdminLayout from './layouts/AdminLayout';
 import Tab from 'pages/Administration/_tab'
+import Permissions from 'pages/Administration/Premissions/index'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -44,9 +45,10 @@ function App() {
                     </Route>
 
                     {/* ADMINISTRATION */}
-                    <Route path="/administration" element={<AdminLayout />}>
+                    <Route path="/admin" element={<AdminLayout />}>
                         <Route path="roles" element={<Role />} />
                         <Route path="roles/edit/:id" element={<RoleEdit />} />
+                        <Route path="permissions" element={<Permissions />} />
                     </Route>
 
                 </Route>

@@ -8,6 +8,12 @@ const resources = {
         admin: 'Administrator',
         user: 'Użytkownik',
       },
+      permissions : {
+        'create': "Utwórz",
+        'edit' : "Edytuj",
+        'view' : "Wyświetl", 
+        'update' : "Aktualizuj"
+      }
     },
   },
 
@@ -17,6 +23,7 @@ const resources = {
         admin: 'Administrator',
         user: 'User',
       },
+
     },
   },
 };

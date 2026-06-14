@@ -78,7 +78,7 @@ export const useUpdateUser = () => {
 
 export const useEditUser = (id) => {
   return useQuery({
-    queryKey: ["user", id],
+    queryKey: ["editedUser", id],
     queryFn: () => fetchUser(id),
   });
 }; 

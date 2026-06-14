@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Required from '../../components/shared/Required';
 import Errors from '../../components/shared/Errors';
+import { can } from '@/auth/auth';
 
 function _Form(props) {
     return (
@@ -31,12 +32,11 @@ function _Form(props) {
             </div>
                 <Errors name={props.errors['confirmPassword']} />
             <div className="flex justify-start">
-                <button
-                    type="submit"
-                    className="text-white bg-gray-800 w-20 text-center hover:bg-gray-600 py-1 rounded"
-                >
-                   {props.isEdit ? "Zapisz" : "Dodaj"}
-                </button>
+                 {can('users.update') && (
+                    <button type="submit" className="text-white bg-gray-800 w-20 text-center hover:bg-gray-600 py-1 rounded">
+                        {props.isEdit ? "Zapisz" : "Dodaj"}
+                    </button>
+                )}
             </div>
                     
 

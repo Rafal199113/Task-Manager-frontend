@@ -5,7 +5,9 @@ const AuthContext = createContext(undefined);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [roles, setRole] = useState(null);
+    const [role, setRole] = useState(null);
+    const [modules, setModules] = useState([]);
+    const [permissions, setPermissions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isLogged, setIsLogged] = useState(false);
 
@@ -20,8 +22,9 @@ export function AuthProvider({ children }) {
         if (!user) {
             getMe().then((response) => {
                 setUser(response.data.user);
-                setRole(response.data.roles);
-                console.log(response.data.roles)
+                setRole(response.data.user.roles[0]);
+                setModules(response.data.modules);
+                setPermissions(response?.data?.modulesPermissions);
             }).catch(() => {
                 setIsLogged(false);
                 localStorage.removeItem("token");
@@ -34,7 +37,9 @@ export function AuthProvider({ children }) {
     const login = async (email, password) => {
         const response = await auth(email, password);
         setUser(response.user);
-        setRole(response.roles);
+        setRole(response.user.roles[0]);
+        setModules(response.modules);
+        setPermissions(response?.data?.modulesPermissions);
         setIsLogged(true);
         localStorage.setItem('token', response.token);
         return response;
@@ -43,29 +48,6 @@ export function AuthProvider({ children }) {
     const logoutUser = async () => {
         const response = await logout().then(() => setIsLogged(false));
     };
-
-    const access = (user) => {
-        console.log(user)
-        const permissions = user?.permissions || [];
-        const roles = user?.roles || [];
-
-        const hasPermission = (perm) =>
-            permissions.includes(perm);
-
-        const hasRole = (role) =>
-            roles.includes(role);
-
-        const can = (perm) =>
-            hasPermission(perm);
-
-        return {
-            permissions,
-            roles,
-            hasPermission,
-            hasRole,
-            can,
-        };
-    }
 
     return (
         <AuthContext.Provider
@@ -77,8 +59,9 @@ export function AuthProvider({ children }) {
                 logoutUser,
                 isLogged,
                 setIsLogged,
-                roles,
-                access
+                role,
+                modules,
+                permissions,
             }}
         >
             {!loading && children}

@@ -9,6 +9,11 @@ const fetchModules = async () => {
   return res.data;
 };
 
+const fetchModulesByPermission = async (id) => {
+  const res = await api.get(`/modules/role/${id}`);
+  return res.data;
+};
+
 
 export const useModules = () => {
   return useQuery({
@@ -16,6 +21,16 @@ export const useModules = () => {
     queryFn: fetchModules,
   });
 }; 
+
+export const useModulesByRolePermission = (id) => {
+    console.log("fetching modules for user id:", id);
+  return useQuery({
+    queryKey: ["modules"],
+    queryFn: () => fetchModulesByPermission(id),
+  });
+}; 
+
+
 
 
 
