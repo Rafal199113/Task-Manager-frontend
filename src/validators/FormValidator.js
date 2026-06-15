@@ -30,11 +30,11 @@ class FormValidator {
                     }
                 break;
                 case "isEmail":
-                    this.errors[fieldName] ??= [];
+                    {this.errors[fieldName] ??= [];
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(text)) {
                         this.errors[fieldName].push(`Pole "${fieldName}" musi być poprawnym adresem email.`);
-                    }
+                    }}
                 break;
             }
         });
@@ -45,7 +45,7 @@ class FormValidator {
     getErrors() {
         const errors = Object.fromEntries(
             Object.entries(this.errors).filter(
-                ([key, value]) => value && value.length > 0
+                ([, value]) => value && value.length > 0
             )
         );
         return errors;

@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/dashboard/Navbar";
-import { useEffect } from "react";
 import Menu from "../components/dashboard/Menu/Menu";
-
 
 function LoginLayout() {
 

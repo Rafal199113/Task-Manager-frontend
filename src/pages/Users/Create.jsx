@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../providers/AuthProvider'
-import Avatar from '../../components/dashboard/Avatar'
-import { useTranslation } from 'react-i18next';
-import { useAddUser, useUsers } from '../../hooks/users';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import Buttons from '../../components/users/Buttons';
+import React, { useState } from 'react';
+import { useAddUser} from '../../hooks/users';
 import Breadcrumbs from '../../components/shared/Breadcrumbs';
-import Required from '../../components/shared/Required';
 import FormValidator from '../../validators/FormValidator';
-import Errors from '../../components/shared/Errors';
 import _Form from './_Form';
 
 function Create() {

@@ -1,14 +1,7 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '../../providers/AuthProvider'
-import Avatar from '../../components/dashboard/Avatar'
-import { useTranslation } from 'react-i18next';
-import { useUsers } from '../../hooks/users';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import Buttons from '../../components/users/Buttons';
-import Breadcrumbs from '../../components/shared/Breadcrumbs';
 import { useNavigate } from "react-router-dom";
-import Loader from '../../components/shared/Loader';
 import { can } from '@/auth/auth';
 
 function _list(props) {
@@ -35,7 +28,7 @@ function _list(props) {
                         </thead>
                         <tbody>
                             {props.users.map((element, index) => (
-                                <tr key={element.id} key={index}>
+                                <tr key={element.id}>
                                     {can('users.edit') && (
                                          <td className='table-col p-1'><button onClick={() => onEdit(element.id_user)} ><FontAwesomeIcon icon={faPenToSquare} /></button></td>
                                     )}

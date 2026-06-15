@@ -1,27 +1,19 @@
-import { useState } from 'react'
 import { Routes, Route } from "react-router-dom";
 
 import LoginLayout from "./layouts/LoginLayout";
 import Login from "./pages/Login";
-
 import Dashboard from './pages/Dashboard/Dashboard';
 import DashboardLayout from '@/layouts/DashboardLayout';
-
 import ProtectedRoute from './middleware/Auth';
-
 import Users from './pages/Users/Index';
 import Create from './pages/Users/Create';
 import Edit from './pages/Users/Edit';
-
 import RoleEdit from 'pages/Administration/Roles/Edit'
 import Role from 'pages/Administration/Roles/index'
 import AdminLayout from './layouts/AdminLayout';
-import Tab from 'pages/Administration/_tab'
 import Permissions from 'pages/Administration/Premissions/index'
 
 function App() {
-    const [count, setCount] = useState(0)
-
     return (
         <Routes>
 

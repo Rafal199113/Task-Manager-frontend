@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useState,} from "react";
 import { auth, getMe, logout } from "../services/api/auth.service";
 
 const AuthContext = createContext(undefined);
@@ -12,27 +12,37 @@ export function AuthProvider({ children }) {
     const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
+      
+    const initAuth = async () => {
         const token = localStorage.getItem("token");
+
         if (!token) {
             setIsLogged(false);
             setLoading(false);
             return;
         }
-        setIsLogged(true);
-        if (!user) {
-            getMe().then((response) => {
-                setUser(response.data.user);
-                setRole(response.data.user.roles[0]);
-                setModules(response.data.modules);
-                setPermissions(response?.data?.modulesPermissions);
-            }).catch(() => {
-                setIsLogged(false);
-                localStorage.removeItem("token");
-            });
-        }
 
-        setLoading(false);
-    }, []);
+        try {
+            setIsLogged(true);
+
+            const response = await getMe();
+
+            setUser(response.data.user);
+            setRole(response.data.user.roles?.[0]);
+            setModules(response.data.modules);
+            setPermissions(response.data.modulesPermissions);
+
+        } catch (err) {
+            console.error("getMe error:", err);
+            setIsLogged(false);
+            localStorage.removeItem("token");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    initAuth();
+}, []);
 
     const login = async (email, password) => {
         const response = await auth(email, password);
@@ -46,7 +56,7 @@ export function AuthProvider({ children }) {
     };
 
     const logoutUser = async () => {
-        const response = await logout().then(() => setIsLogged(false));
+        await logout().then(() => setIsLogged(false));
     };
 
     return (

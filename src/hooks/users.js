@@ -4,12 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApp } from "../providers/AppProvider";
 import { useNavigate } from "react-router-dom";
 
-const fetchUsersWithParams = async (params) => {
-  const res = await api.get("/users");
-  return res.data;
-};
-
-
 const fetchUsers = async () => {
   const res = await api.get("/users");
   return res.data;
@@ -17,7 +11,6 @@ const fetchUsers = async () => {
 
 const fetchUser = async (id) => {
     const res = await api.get(`/users/${id}`);
-    console.log(res.data)
     return res.data;
 };
 
@@ -43,7 +36,7 @@ export const useAddUser = () => {
         text: "Dodano nowego użytkownika",
       });
       navigate('/users')
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setMessage("");
       }, 5000);
       queryClient.invalidateQueries(["users"]);
@@ -65,7 +58,7 @@ export const useUpdateUser = () => {
         text: "Zaktualizowano",
       });
 
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setMessage("");
       }, 5000);
 
@@ -78,7 +71,7 @@ export const useUpdateUser = () => {
 
 export const useEditUser = (id) => {
   return useQuery({
-    queryKey: ["editedUser", id],
+    queryKey: ["git", id],
     queryFn: () => fetchUser(id),
   });
 }; 
@@ -98,7 +91,6 @@ export const useUpdateModulesPermissions = () => {
     return useMutation({
         mutationFn: ({ id, userData }) =>
            { 
-            console.log("user data: " + userData)
             api.put(`/users/${id}/permissions`, userData)},
 
         onSuccess: (_, variables) => {

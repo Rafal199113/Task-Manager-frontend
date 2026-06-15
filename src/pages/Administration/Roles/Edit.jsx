@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import Loader from "components/shared/Loader";
 import Breadcrumbs from "components/shared/Breadcrumbs";
 import { useRole, useUpdateRole } from "hooks/roles.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import Required from "components/shared/Required";
 import Errors from "components/shared/Errors";
 import FormValidator from "validators/FormValidator";

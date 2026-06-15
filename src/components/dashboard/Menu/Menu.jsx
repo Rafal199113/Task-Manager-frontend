@@ -1,24 +1,15 @@
 
-import { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faUsers, faLayerGroup, faCheck, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 import ListItem from "./ListItem";
-import { useModules } from "../../../hooks/modules"
-import DropDownMenu from './DropDownMenu';
 import { useAuth } from '../../../providers/AuthProvider'
 import { useApp } from '../../../providers/AppProvider'
 import { useTranslation } from 'react-i18next';
-import logo from '../../../assets/app/icon.png'
-import adminIcon from '../../../assets/menu/icons/administration.png'
-import Loader from "components/shared/Loader";
 
 function Menu() {
     const { setActive} = useApp();
     const { user, role, logoutUser, modules } = useAuth();
-    const [loggedUser, setUser] = useState(user);
     const { t } = useTranslation()
     
-    const [adminOpen, setAdminOpen] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
         logoutUser();
@@ -36,8 +27,8 @@ function Menu() {
         <div className="w-full bg-gray-800 rounded-xl p-3">
             <div className="w-64 min-h-[50vh] m-3 flex flex-col gap-2">
                 <ListItem icon={faHouse} label="Dashboard" onClick={()=>{setActive(module.m_code)}}/>
-                {modules?.map((module, index) => (
-                    <ListItem icon={iconMap[module.m_icon] } label={module.m_name} link={"/"+module.m_code} onClick={()=>{setActive(module.m_code)}}/>
+                {modules?.map((module,) => (
+                    <ListItem key={module.id_module} icon={iconMap[module.m_icon] } label={module.m_name} link={"/"+module.m_code} onClick={()=>{setActive(module.m_code)}}/>
                 ))}
             </div>
 

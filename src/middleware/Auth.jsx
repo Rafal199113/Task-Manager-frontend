@@ -1,9 +1,8 @@
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useAuth } from "../providers/AuthProvider";
 
 export default function ProtectedRoute(){
-    const {user, isLogged, permissions} = useAuth();
+    const {isLogged, permissions} = useAuth();
     const navigate  = useNavigate(); 
     const location = useLocation();
     const path = location.pathname.split('/')[1];

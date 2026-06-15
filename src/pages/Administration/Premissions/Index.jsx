@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Breadcrumbs from 'components/shared/Breadcrumbs';
-import Loader from 'components/shared/Loader';
-import { usePermissions } from "../../../hooks/permissions";
-import { useModules } from "../../../hooks/modules";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from "react-router-dom";
 
 function Permissions() {
     const whereIam = [{ "Dashboard": null }, { "Uprawnienia": null }, { "Dostępy": null }]
-    const { data: permissions, isLoading: isPermissionsLoading } = usePermissions();
-    const { data: modules, isLoading: isModuleLoading } = useModules();
     const navigate = useNavigate();
     const onEdit = (id) => {
         navigate(`edit/${id}`);
     }
-
-  
-
-   
-        
-return (
+    
+    return (
             <div>
                 <div className='w-full'>
                     <Breadcrumbs items={whereIam} />

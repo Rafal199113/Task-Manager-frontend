@@ -1,8 +1,4 @@
 
-import { useState } from "react";
-import { useAuth } from '../../providers/AuthProvider'
-import Avatar from '../../components/dashboard/Avatar'
-import { useTranslation } from 'react-i18next';
 import logo from '../../assets/app/icon.png'
 import { useApp } from "../../providers/AppProvider";
 

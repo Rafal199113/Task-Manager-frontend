@@ -5,14 +5,12 @@ import { useRoles } from "hooks/roles";
 import Loader from "../../components/shared/Loader";
 import FormValidator from "../../validators/FormValidator";
 import _Form from "./_Form";
-import { useAuth } from "../../providers/AuthProvider";
 import Breadcrumbs from "../../components/shared/Breadcrumbs";
 
 function Edit() {
     const whereIam = [{ "Dashboard": null }, { "Użytkownicy": "/users" }, { "Edytuj użytkownika": null }]
     const { id } = useParams();
     const { data: roles, isLoading: isRoleLoading } = useRoles();
-    const { role } = useAuth();
     const { data: editedUser, isLoading: isUserLoading } = useEditUser(id);
     const [selectedRole, setSelectedRole] = useState(null);
 
@@ -23,7 +21,7 @@ function Edit() {
 
     const [errors, setErrors] = useState([]);
 
-    const isPageLoading = isUserLoading || isRoleLoading;
+    const isPageLoading = isUserLoading || isRoleLoading || isUpdating;
 
     useEffect(() => {
         if (editedUser?.data?.roles?.length) {

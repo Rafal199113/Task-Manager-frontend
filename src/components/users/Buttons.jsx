@@ -1,8 +1,4 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '../../providers/AuthProvider'
-import Avatar from '../dashboard/Avatar'
-import { useTranslation } from 'react-i18next';
-import { useUsers } from '../../hooks/users';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';

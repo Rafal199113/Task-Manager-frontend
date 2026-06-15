@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function Errors(props) {
    
     if(!props.name || props.name.length === 0) return null;
