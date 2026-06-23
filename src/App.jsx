@@ -12,6 +12,9 @@ import RoleEdit from 'pages/Administration/Roles/Edit'
 import Role from 'pages/Administration/Roles/index'
 import AdminLayout from './layouts/AdminLayout';
 import Permissions from 'pages/Administration/Premissions/index'
+import Projects from 'pages/Projects/index'
+import ProjectCreate from './pages/Projects/Create';
+import ProjectEdit from './pages/Projects/Edit';
 
 function App() {
     return (
@@ -42,6 +45,10 @@ function App() {
                         <Route path="roles/edit/:id" element={<RoleEdit />} />
                         <Route path="permissions" element={<Permissions />} />
                     </Route>
+
+                    <Route path="projects" element={<Projects />} />
+                    <Route path="projects/create" element={<ProjectCreate />} />
+                    <Route path="projects/edit/:id" element={<ProjectEdit />} />
 
                 </Route>
             </Route>

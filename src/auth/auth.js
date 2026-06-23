@@ -1,11 +1,8 @@
-import { useAuth } from '@/providers/AuthProvider';
 
-export const can = (permission) => {
-    const { permissions } = useAuth();
-
+export const can = (permissions, permission) => {
     if (permissions) {
         let [key, value] = permission.split('.');
-
+console.log(permissions)
         let exists = Object.hasOwn(permissions, key);
         const modulePermissions = permissions?.[key];
         if (exists) {

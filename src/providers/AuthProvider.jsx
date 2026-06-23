@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
       
+    
     const initAuth = async () => {
         const token = localStorage.getItem("token");
 
@@ -49,7 +50,7 @@ export function AuthProvider({ children }) {
         setUser(response.user);
         setRole(response.user.roles[0]);
         setModules(response.modules);
-        setPermissions(response?.data?.modulesPermissions);
+        setPermissions(response?.modulesPermissions);
         setIsLogged(true);
         localStorage.setItem('token', response.token);
         return response;
@@ -58,6 +59,11 @@ export function AuthProvider({ children }) {
     const logoutUser = async () => {
         await logout().then(() => setIsLogged(false));
     };
+
+    const can = (permission) => {
+        return checkPermission(permissions, permission);
+    };
+
 
     return (
         <AuthContext.Provider
@@ -72,6 +78,7 @@ export function AuthProvider({ children }) {
                 role,
                 modules,
                 permissions,
+                can
             }}
         >
             {!loading && children}
@@ -87,4 +94,44 @@ export function useAuth() {
     }
 
     return context;
+}
+
+function checkPermission(permissions, permission){
+   if (permissions) {
+        let [key, value] = permission.split('.');
+
+        let exists = Object.hasOwn(permissions, key);
+        const modulePermissions = permissions?.[key];
+
+        if (exists) {
+            switch (value) {
+                case 'edit':
+                    if (modulePermissions?.['edit']) {
+                        return true;
+                    }
+                    break;
+                case 'update':
+                    if (modulePermissions?.['update']) {
+                        return true;
+                    }
+
+                    break;
+                case 'create':
+                    if (modulePermissions?.['create']) {
+                        return true;
+                    }
+
+                    break;
+                case 'delete':
+                    if (modulePermissions?.['delete']) {
+                        return true;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return false;
 }
