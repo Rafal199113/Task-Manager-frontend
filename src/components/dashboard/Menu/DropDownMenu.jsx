@@ -1,13 +1,7 @@
-
 import { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faUsers, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from "react-router-dom";
 import ListItem from "./ListItem";
-import ModuleIcon from 'assets/menu/icons/module.png'
 
 function DropDownMenu(props){
-    const navigate = useNavigate();
     const [adminOpen, setAdminOpen] = useState(false);
     return (
         <div>

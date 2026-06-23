@@ -2,7 +2,6 @@ import {useQuery} from "@tanstack/react-query";
 import api from "../api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApp } from "../providers/AppProvider";
-import { useNavigate } from "react-router-dom";
 
 const fetchRoles = async () => {
   const res = await api.get("/roles");
@@ -46,7 +45,7 @@ export const useUpdateRole = () => {
         text: "Zaktualizowano",
       });
 
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setMessage("");
       }, 5000);
 

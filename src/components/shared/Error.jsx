@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function Error({ message, onClose }) {
      if (!message) return null;
     return (

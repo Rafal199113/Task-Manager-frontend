@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useAddUser} from '../../hooks/users';
+import { useAddProject} from '../../hooks/projects';
 import Breadcrumbs from '../../components/shared/Breadcrumbs';
 import FormValidator from '../../validators/FormValidator';
 import _Form from './_Form';
+import { useAuth } from '@/providers/AuthProvider';
 
 function Create() {
-    const whereIam = [{"Dashboard" : null}, {"Użytkownicy": "/users"}, {"Nowy użytkownik":null}]
-    const { mutate: addUser } = useAddUser();
+    const whereIam = [{"Dashboard" : null}, {"Projekty": "/projects"}, {"Nowy projekt":null}]
+    const { mutate: addProject } = useAddProject();
     const [errors, setErrors] = useState([]);
+    const { user } = useAuth();
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -17,28 +19,26 @@ function Create() {
             { maxLength: 50 },
             { isEmpty: false }];
 
-        const validator = new FormValidator();
-        validator.validateField("name", e.target.name.value, rules);
-        validator.validateField("surname", e.target.surname.value, rules);
-        validator.validateField("email", e.target.email.value, rules);
-        validator.validateField("password", e.target.password.value, rules);
-        validator.validateField("confirmPassword", e.target.confirmPassword.value, rules);
-
-        validator.checkPasswords(e.target.password.value, e.target.confirmPassword.value);
-
+        const validator = new FormValidator('projects');
+        validator.validateField("p_name", e.target.p_name.value, rules);
+        validator.validateField("p_key", e.target.p_key.value, rules);
+        validator.validateField("p_desc", e.target.p_desc.value, rules);
+        validator.validateField("p_color", e.target.p_color.value, rules);
 
         const formData = {
-            name: e.target.name.value,
-            surname: e.target.surname.value,
-            email: e.target.email.value,
-            password: e.target.password.value,
+            p_name: e.target.p_name.value,
+            p_key: e.target.p_key.value,
+            p_desc: e.target.p_desc.value,
+            p_color: e.target.p_color.value,
+            id_user: user.id_user,
         };
 
         if(Object.keys(validator.getErrors()).length > 0) {
             setErrors(validator.getErrors());
             return;
         }
-        addUser(formData);
+
+        addProject(formData);
     }
     return (
          <div>
@@ -46,10 +46,10 @@ function Create() {
                     <Breadcrumbs items={whereIam} />
                     <div className='flex flex-col w-fit mt-3 border border-gray-300 gap-3 bg-white rounded-lg shadow-md'>
                         <div className='table-header rounded m-0'>
-                            Dodawanie nowego użytkownika
+                            Dodawanie nowego projektu
                         </div>
                         <form onSubmit={onSubmit} className='p-5 rounded-lg shadow-md'>
-                            <_Form errors={errors} isEdit={false} />
+                            <_Form errors={errors} isEdit={true} />
                         </form>
                     </div>
                 </div>

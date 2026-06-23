@@ -1,71 +1,69 @@
-import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useState,} from "react";
 import { auth, getMe, logout } from "../services/api/auth.service";
 
 const AuthContext = createContext(undefined);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [roles, setRole] = useState(null);
+    const [role, setRole] = useState(null);
+    const [modules, setModules] = useState([]);
+    const [permissions, setPermissions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
+      
+    
+    const initAuth = async () => {
         const token = localStorage.getItem("token");
+
         if (!token) {
             setIsLogged(false);
             setLoading(false);
             return;
         }
-        setIsLogged(true);
-        if (!user) {
-            getMe().then((response) => {
-                setUser(response.data.user);
-                setRole(response.data.roles);
-                console.log(response.data.roles)
-            }).catch(() => {
-                setIsLogged(false);
-                localStorage.removeItem("token");
-            });
-        }
 
-        setLoading(false);
-    }, []);
+        try {
+            setIsLogged(true);
+
+            const response = await getMe();
+
+            setUser(response.data.user);
+            setRole(response.data.user.roles?.[0]);
+            setModules(response.data.modules);
+            setPermissions(response.data.modulesPermissions);
+
+        } catch (err) {
+            console.error("getMe error:", err);
+            setIsLogged(false);
+            localStorage.removeItem("token");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    initAuth();
+}, []);
 
     const login = async (email, password) => {
         const response = await auth(email, password);
         setUser(response.user);
-        setRole(response.roles);
+        setRole(response.user.roles[0]);
+        setModules(response.modules);
+        setPermissions(response?.modulesPermissions);
         setIsLogged(true);
         localStorage.setItem('token', response.token);
         return response;
     };
 
     const logoutUser = async () => {
-        const response = await logout().then(() => setIsLogged(false));
+        await logout().then(() => setIsLogged(false));
     };
 
-    const access = (user) => {
-        console.log(user)
-        const permissions = user?.permissions || [];
-        const roles = user?.roles || [];
+    const can = (permission) => {
+        return checkPermission(permissions, permission);
+    };
 
-        const hasPermission = (perm) =>
-            permissions.includes(perm);
-
-        const hasRole = (role) =>
-            roles.includes(role);
-
-        const can = (perm) =>
-            hasPermission(perm);
-
-        return {
-            permissions,
-            roles,
-            hasPermission,
-            hasRole,
-            can,
-        };
-    }
 
     return (
         <AuthContext.Provider
@@ -77,8 +75,10 @@ export function AuthProvider({ children }) {
                 logoutUser,
                 isLogged,
                 setIsLogged,
-                roles,
-                access
+                role,
+                modules,
+                permissions,
+                can
             }}
         >
             {!loading && children}
@@ -94,4 +94,44 @@ export function useAuth() {
     }
 
     return context;
+}
+
+function checkPermission(permissions, permission){
+   if (permissions) {
+        let [key, value] = permission.split('.');
+
+        let exists = Object.hasOwn(permissions, key);
+        const modulePermissions = permissions?.[key];
+
+        if (exists) {
+            switch (value) {
+                case 'edit':
+                    if (modulePermissions?.['edit']) {
+                        return true;
+                    }
+                    break;
+                case 'update':
+                    if (modulePermissions?.['update']) {
+                        return true;
+                    }
+
+                    break;
+                case 'create':
+                    if (modulePermissions?.['create']) {
+                        return true;
+                    }
+
+                    break;
+                case 'delete':
+                    if (modulePermissions?.['delete']) {
+                        return true;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return false;
 }

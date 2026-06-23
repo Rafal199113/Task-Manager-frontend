@@ -7,7 +7,7 @@ function Buttons() {
     const navigate = useNavigate();
      const handleSubmit = async (e) => {
       e.preventDefault();
-          navigate('/users/create');
+          navigate('/projects/create');
       }
     return (
         <div className="flex place-content-end gap-x-3 hover:point cursor-pointer mb-3 mt-3" onClick={handleSubmit}>

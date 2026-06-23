@@ -21,6 +21,10 @@
 .searcher {
     @apply whitespace-nowrap py-1 px-2 text-center border border-gray-800
 }
+
+.full {
+    
+}
 }
 
 body {

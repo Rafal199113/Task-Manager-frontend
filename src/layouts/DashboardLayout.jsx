@@ -1,14 +1,25 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/dashboard/Navbar";
-import { useEffect } from "react";
 import Menu from "../components/dashboard/Menu/Menu";
-
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 function LoginLayout() {
 
 
     return (
         <div className="flex flex-row m-5">
+              <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={false}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
             <div className=" flex w-full flex-col">
 
   <div className="h-20 bg-gray-800 rounded-xl text-white flex items-center px-4">

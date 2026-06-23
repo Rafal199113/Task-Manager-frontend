@@ -1,22 +1,6 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '../../../providers/AuthProvider'
-import Avatar from '../../../components/dashboard/Avatar'
-import { useTranslation } from 'react-i18next';
-import { useUsers } from '../../../hooks/users';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import Buttons from '../../../components/users/Buttons';
-import Breadcrumbs from '../../../components/shared/Breadcrumbs';
-import { useNavigate } from "react-router-dom";
-import Loader from '../../../components/shared/Loader';
-import Required from 'components/shared/Required';
-import Errors from 'components/shared/Errors';
+import React from 'react';
 
 function Search({ filters, setFilters }) {
-    const whereIam = [{"Dashboard" : null}, {"Użytkownicy": null}, {"Lista":null}]
-    const {data:users, isLoading} = useUsers();
-    const navigate = useNavigate();
-
     const handleSearch = (e) => {
         setFilters({
             ...filters, [e.target.name]: e.target.value

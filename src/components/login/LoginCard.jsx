@@ -1,5 +1,4 @@
-import { Outlet } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import  Error  from "@/components/shared/Error";
 import { useNavigate } from "react-router-dom";
 
@@ -13,8 +12,7 @@ function LoginCard() {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
     e.preventDefault();
-      login(email, password).then((user) => {
-    
+      login(email, password).then(() => {
         navigate("/dashboard");
         });
 
