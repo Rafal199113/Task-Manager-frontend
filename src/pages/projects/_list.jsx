@@ -8,6 +8,7 @@ function _list(props) {
     const { can } = useAuth();
     const navigate = useNavigate();
     const onEdit = (id) => {
+        console.log("ID" , id)
         navigate(`/projects/edit/${id}`);
     }
         return (
@@ -23,6 +24,8 @@ function _list(props) {
                                 <th className='table-col' style={{ width: '40px' }}>Lp.</th>
                                 <th className='table-col'>Nazwa</th>
                                 <th className='table-col'>Właściciel</th>
+                                <th className='table-col'>Kierownik projektu</th>
+                                <th className='table-col'>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +36,9 @@ function _list(props) {
                                     )}
                                     <td className='table-col'>{++index}</td>
                                     <td className='table-col'>{element.p_name}</td>
-                                    <td className='table-col'>{element.user.name + "." + element.user.surname}</td>
+                                    <td className='table-col'>{element.owner.name + "." + element.owner.surname}</td>
+                                    <td className='table-col'>{element.lead.name + "." + element.lead.surname}</td>
+                                    <td className='table-col'>{element.status.ps_name}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -22,6 +22,7 @@ const resources = {
         p_key: 'Klucz projektu',
         p_desc: 'Opis projektu',
         p_color: 'Kolor projektu',
+        id_lead: 'Kierownik projektu',
       },
 
       validation: {

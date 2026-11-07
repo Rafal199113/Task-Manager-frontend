@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import { useProject, useUpdateProjct, useDeleteProject } from "../../hooks/projects";
 import Loader from "../../components/shared/Loader";
 import FormValidator from "../../validators/FormValidator";
-import _Form from "./_Form";
-import Breadcrumbs from "../../components/shared/Breadcrumbs";
+import _Form from "./_form";
+import Breadcrumbs from "../../components/shared/breadcrumbs";
 import { useAuth } from '@/providers/AuthProvider';
 import Delete from "../../components/shared/module/Delete"
+import { useUsers } from '../../hooks/users';
+import  {useGitchub}  from '../../hooks/gitchub'
+import Tab from 'pages/projects/_tab';
 
 function Edit() {
     const whereIam = [{ "Dashboard": null }, { "Projekty": "/projects" }, { "Edytuj projekt": null }]
@@ -15,10 +18,9 @@ function Edit() {
     const {mutate: updateProject, isPending: isProjectUpdated} = useUpdateProjct();
     const { user, can } = useAuth();
     const [errors, setErrors] = useState([]);
-  
     const isPageLoading = isProjectLoaded;
-
-   
+    const { data: users, isLoading } = useUsers({active : true});
+    const { data: repositories} = useGitchub();
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -36,8 +38,10 @@ function Edit() {
         validator.validateField("p_key", e.target.p_key.value, rules);
         validator.validateField("p_desc", e.target.p_desc.value, rules);
         validator.validateField("p_color", e.target.p_color.value, rules);
+        validator.validateSelectIsNotEmpty("id_lead", e.target.querySelector('[name="id_lead"]').value);
+        validator.validateSelectIsNotEmpty("id_lead", e.target.querySelector('[name="id_project_statuses"]').value);
 
-        if (validator.getErrors().length > 0) {
+        if (Object.keys(validator.getErrors()).length > 0) {
             setErrors(validator.getErrors());
             return;
         }
@@ -45,9 +49,12 @@ function Edit() {
         const formData = {
             p_name: e.target.p_name.value,
             p_key: e.target.p_key.value,
-            p_desc: e.target.p_desc.value,
+            p_description: e.target.p_desc.value,
+            p_repository: e.target.p_repository.value,
             p_color: e.target.p_color.value,
             id_user: user.id_user,
+            id_lead: e.target.querySelector('[name="id_lead"]').value,
+            id_project_statuses: e.target.querySelector('[name="id_project_statuses"]').value,
         };
 
         updateProject({
@@ -59,7 +66,7 @@ function Edit() {
     if (isPageLoading) { return <Loader /> } else {
         return (
             <div>
-
+                <Tab />
                 <div className='w-full'>
                     <Breadcrumbs items={whereIam} />
                     <div className='flex flex-col  mt-3 border border-gray-300 gap-3 bg-white rounded-lg shadow-md'>
@@ -68,7 +75,7 @@ function Edit() {
                         </div>
                         <div className="p-2">
                             <form onSubmit={onSubmit}>
-                                <_Form errors={errors} project={project?.data} isEdit />
+                                <_Form errors={errors} project={project?.data} isEdit={true} users={users} repos={repositories} />
                             </form>
                         </div>
                     </div>
@@ -77,7 +84,7 @@ function Edit() {
                     id_element = {id}
                     url = "/projects/"
                     navigateTo = "/projects"
-                    element = "project"
+                    element = "projekt"
                     returnElement = "projects"
                     permission = "projects.delete"
                     confirm_text = "Czy napewno chcesz usunąć projekt?"

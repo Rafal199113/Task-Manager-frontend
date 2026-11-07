@@ -1,20 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 
-import LoginLayout from "./layouts/LoginLayout";
-import Login from "./pages/Login";
-import Dashboard from './pages/Dashboard/Dashboard';
-import DashboardLayout from '@/layouts/DashboardLayout';
-import ProtectedRoute from './middleware/Auth';
-import Users from './pages/Users/Index';
-import Create from './pages/Users/Create';
-import Edit from './pages/Users/Edit';
-import RoleEdit from 'pages/Administration/Roles/Edit'
-import Role from 'pages/Administration/Roles/index'
-import AdminLayout from './layouts/AdminLayout';
-import Permissions from 'pages/Administration/Premissions/index'
-import Projects from 'pages/Projects/index'
-import ProjectCreate from './pages/Projects/Create';
-import ProjectEdit from './pages/Projects/Edit';
+import LoginLayout from "./layouts/login_layout";
+import Login from "./pages/login";
+import Dashboard from "./pages/dashboard/dashboard";
+import DashboardLayout from "@/layouts/dashboard_layout";
+import ProtectedRoute from "./middleware/auth";
+import Users from "./pages/users/index";
+import Create from "./pages/users/create";
+import Edit from "./pages/users/edit";
+import RoleEdit from "pages/administration/roles/edit";
+import Role from "pages/administration/roles/index";
+import AdminLayout from "./layouts/admin_layout";
+import Permissions from "pages/administration/premissions/index";
+import Projects from "pages/projects/index";
+import ProjectCreate from "./pages/projects/create";
+import ProjectEdit from "./pages/projects/edit";
+import Settings from "./pages/settings/index";
 
 function App() {
     return (
@@ -50,6 +51,7 @@ function App() {
                     <Route path="projects/create" element={<ProjectCreate />} />
                     <Route path="projects/edit/:id" element={<ProjectEdit />} />
 
+                    <Route path="settings" element={<Settings />} />
                 </Route>
             </Route>
 

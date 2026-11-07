@@ -4,8 +4,8 @@ import { useEditUser, useUpdateUser } from "../../hooks/users";
 import { useRoles } from "hooks/roles";
 import Loader from "../../components/shared/Loader";
 import FormValidator from "../../validators/FormValidator";
-import _Form from "./_Form";
-import Breadcrumbs from "../../components/shared/Breadcrumbs";
+import _Form from "./_form";
+import Breadcrumbs from "../../components/shared/breadcrumbs";
 
 function Edit() {
     const whereIam = [{ "Dashboard": null }, { "Użytkownicy": "/users" }, { "Edytuj użytkownika": null }]

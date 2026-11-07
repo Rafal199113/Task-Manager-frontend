@@ -1,9 +1,9 @@
 import React from 'react';
 import { useProjects} from '../../hooks/projects';
-import Buttons from './Buttons';
-import Breadcrumbs from '../../components/shared/Breadcrumbs';
+import Buttons from './buttons';
+import Breadcrumbs from '../../components/shared/breadcrumbs';
 import Loader from '../../components/shared/Loader';
-import ProjectList from 'pages/Projects/_list'
+import ProjectList from 'pages/projects/_list'
 import { useAuth } from '@/providers/AuthProvider';
 
 function Index() {
@@ -20,6 +20,7 @@ function Index() {
                     {can('projects.create') && (
                         <Buttons />       
                     )}
+                   
                     <ProjectList projects={projects?.data} header={"Lista projetków"}/>
                 </div>
             </div>

@@ -14,6 +14,17 @@ class FormValidator {
     });
   }
 
+  validateSelectIsNotEmpty(fieldName, value) {
+     this.errors[fieldName] ??= [];
+    if (!value || Number(value) === 0) {
+      this.errors[fieldName].push(
+        this.t("validation.required", {
+          field: this.getLabel(fieldName)
+        })
+      );
+    }
+  }
+
   validateField(fieldName, text, rules) {
     rules.forEach(rule => {
       const [key, value] = Object.entries(rule)[0];

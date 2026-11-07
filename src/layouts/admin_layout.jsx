@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Tab from 'pages/Administration/_tab';
+import Tab from 'pages/administration/_tab';
 
 function AdminLayout() {
     return (

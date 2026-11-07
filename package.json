@@ -19,6 +19,7 @@
     "axios": "^1.15.2",
     "flowbite": "^4.0.1",
     "i18next": "^26.1.0",
+    "octokit": "^5.0.5",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-i18next": "^17.0.7",

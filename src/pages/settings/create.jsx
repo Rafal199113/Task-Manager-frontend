@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAddUser} from '../../hooks/users';
-import Breadcrumbs from '../../components/shared/Breadcrumbs';
+import Breadcrumbs from '../../components/shared/breadcrumbs';
 import FormValidator from '../../validators/FormValidator';
-import _Form from './_Form';
+import _Form from './_form';
 
 function Create() {
     const whereIam = [{"Dashboard" : null}, {"Użytkownicy": "/users"}, {"Nowy użytkownik":null}]

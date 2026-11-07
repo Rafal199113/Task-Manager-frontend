@@ -25,9 +25,9 @@ export function AuthProvider({ children }) {
 
         try {
             setIsLogged(true);
-
+            
             const response = await getMe();
-
+            console.log(response.data)
             setUser(response.data.user);
             setRole(response.data.user.roles?.[0]);
             setModules(response.data.modules);
@@ -47,6 +47,7 @@ export function AuthProvider({ children }) {
 
     const login = async (email, password) => {
         const response = await auth(email, password);
+
         setUser(response.user);
         setRole(response.user.roles[0]);
         setModules(response.modules);

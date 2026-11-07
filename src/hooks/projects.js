@@ -43,10 +43,7 @@ export const useAddProject = () => {
         theme: "dark",
         transition: Bounce,
         });
-      setMessage({
-        type: "success",
-        text: "Dodano nowy projekt",
-      });
+    
       navigate('/projects')
       setTimeout(() => {
         setMessage("");
@@ -67,14 +64,20 @@ export const useUpdateProjct = () => {
         api.put(`/projects/${id}`, projectData)},
 
     onSuccess: (_, variables) => {
-      setMessage({
-        type: "success",
-        text: "Zaktualizowano",
-      });
-
-      setTimeout(() => {
-        setMessage("");
-      }, 5000);
+        toast.success('Zaktualizowano projekt', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+          style:{
+              backgroundColor: "#1E2939"
+          }
+        });
 
       queryClient.invalidateQueries({
         queryKey: ["project", variables.id],

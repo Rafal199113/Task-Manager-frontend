@@ -4,8 +4,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApp } from "../providers/AppProvider";
 import { useNavigate } from "react-router-dom";
 
-const fetchUsers = async () => {
-  const res = await api.get("/users");
+const fetchUsers = async (filters) => {
+  console.log("Fetching users with filters:", filters);
+  const res = await api.get("/users", { params: filters });
   return res.data;
 };
 
@@ -14,10 +15,10 @@ const fetchUser = async (id) => {
     return res.data;
 };
 
-export const useUsers = () => {
+export const useUsers = (filters = {}) => {
   return useQuery({
-    queryKey: ["users"],
-    queryFn: fetchUsers,
+    queryKey: ["users", filters],
+    queryFn: () => fetchUsers(filters),
   });
 }; 
 

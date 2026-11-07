@@ -26,10 +26,11 @@ function _Form(props) {
             </div>
                 <Errors name={props.errors['password']} />
             <div className="flex items-center gap-3">
-            <label className="w-32 text-gray-600">Powtórz hasło: <Required /></label>
-            <input type="password" name='confirmPassword' className={`form-control flex-1 ${props.errors['confirmPassword'] && props.errors['confirmPassword'].length > 0 ? 'border-red-500' : ''}`} />
+                <label className="w-32 text-gray-600">Powtórz hasło: <Required /></label>
+                <input type="password" name='confirmPassword' className={`form-control flex-1 ${props.errors['confirmPassword'] && props.errors['confirmPassword'].length > 0 ? 'border-red-500' : ''}`} />
             </div>
                 <Errors name={props.errors['confirmPassword']} />
+           
             <div className="flex justify-start">
                  {can('users.update') && (
                     <button type="submit" className="text-white bg-gray-800 w-20 text-center hover:bg-gray-600 py-1 rounded">

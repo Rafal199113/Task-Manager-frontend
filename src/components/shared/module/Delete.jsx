@@ -16,7 +16,7 @@ function Delete(props) {
         }
     }
     return (
-        <div className='w-full'>
+        <div className='w-2/6'>
             <div className='flex flex-col  mt-3 border border-gray-300 gap-3 bg-white rounded-lg shadow-md'>
                 <div className='table-header rounded m-0'>
                     Usuń {props.element}

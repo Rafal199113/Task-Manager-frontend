@@ -1,5 +1,5 @@
 import React from 'react';
-import Breadcrumbs from 'components/shared/Breadcrumbs';
+import Breadcrumbs from 'components/shared/breadcrumbs';
 import Loader from 'components/shared/Loader';
 import { useRoles } from "../../../hooks/roles";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

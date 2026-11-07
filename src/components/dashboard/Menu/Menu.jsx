@@ -1,5 +1,5 @@
 
-import { faHouse, faUsers, faLayerGroup, faCheck, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faUsers, faLayerGroup, faCheck, faGear, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 import ListItem from "./ListItem";
 import { useAuth } from '../../../providers/AuthProvider'
 import { useApp } from '../../../providers/AppProvider'
@@ -20,6 +20,7 @@ function Menu() {
         "faScrewdriverWrench": faScrewdriverWrench,
         "faLayerGroup": faLayerGroup,
         'faCheck': faCheck,
+        'faGear' : faGear,
     };
 
     
